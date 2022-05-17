@@ -5,12 +5,14 @@ from Shader import *
 from Modelo import *
 from Triangulo import Triangulo
 from Fondo import Fondo
+from Boss import *
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 fondo = None
 modelo = None
+boss = None
 window = None
 
 vertex_shader_source = ""
@@ -37,10 +39,21 @@ def actualizar():
     if estado_izquierda == glfw.PRESS:
         modelo.mover(modelo.IZQUIERDA)
 
+    boss.actualizar()
+    if modelo.colisionando(boss):
+        glfw.set_window_should_close(window, 1)
+        print("Game over: perdiste")
 
+
+def colisionando():
+    colisionando = False
+    return colisionando
+    
 def dibujar():
     global modelo
-    global fondo 
+    global fondo
+    global boss
+    boss.dibujar()
     fondo.dibujar()
     modelo.dibujar()
 
@@ -48,6 +61,7 @@ def main():
     global modelo
     global fondo
     global window
+    global boss
     glfw.init()
 
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR,3)
@@ -80,6 +94,7 @@ def main():
     modelo = Triangulo(shader, 
             posicion_id, color_id, transformaciones_id)
 
+    boss = Boss(shader, posicion_id, color_id, transformaciones_id)
 
 
     #draw loop
@@ -97,6 +112,7 @@ def main():
     #Liberar memoria
     modelo.borrar()
     fondo.borrar()
+    boss.borrar()
     shader.borrar()
 
     

@@ -215,7 +215,7 @@ class Fondo(Modelo):
         gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 48, 3)
         gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 51, 5)
         gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 56, 4)
-        gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 60, 8)
+        gl.glDrawArrays(gl.GL_TRIANGLES, 60, 8)
 
 
 
@@ -223,6 +223,8 @@ class Fondo(Modelo):
         self.shader.liberar_programa()
 
     def borrar(self):
-        gl.glDeleteVertexArrays(1, self.VAO)
-        gl.glDeleteBuffers(1, self.VBO)
+        #gl.glDeleteVertexArrays(1, self.VAO)
+        #gl.glDeleteBuffers(1, self.VBO)
+
+        print("borrando")
 

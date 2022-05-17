@@ -1,5 +1,4 @@
 from OpenGL.GL import *
-from glew_wish import *
 from Modelo import *
 
 class Bicho(Modelo):
@@ -14,7 +13,7 @@ class Bicho(Modelo):
         
     def actualizar (self):
         if self.vivo:
-            if self.posicion_id[0] > 1.05: 
+            if self.posicion.x > 1.05: 
                 self.posicion_id[0] = -1.0
             if self.posicion_id[0] < -1.05: 
                 self.posicion_id[0] = 1.0
