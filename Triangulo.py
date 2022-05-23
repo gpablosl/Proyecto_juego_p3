@@ -13,6 +13,7 @@ class Triangulo(Modelo):
         self.extremo_derecho = 0.05
         self.extremo_inferior = 0.05
         self.extremo_superior = 0.05
+        self.velocidad = 1.2
         self.posicion = glm.vec3(0.0,-0.8,0.0)
         self.vertices = np.array(
             [
@@ -54,16 +55,16 @@ class Triangulo(Modelo):
         self.transformaciones = glm.translate(self.transformaciones,
                 self.posicion)
 
-    def mover(self, direccion):
-        
+    def mover(self, direccion, tiempo_delta):
+        cantidad_movimiento = self.velocidad * tiempo_delta
         if direccion == self.ARRIBA:
-           self.posicion.y  = self.posicion.y + 0.002
+           self.posicion.y  = self.posicion.y + cantidad_movimiento
         elif direccion == self.ABAJO:
-            self.posicion.y = self.posicion.y - 0.002
+            self.posicion.y = self.posicion.y - cantidad_movimiento
         elif direccion == self.DERECHA:
-            self.posicion.x = self.posicion.x + 0.002       
+            self.posicion.x = self.posicion.x + cantidad_movimiento       
         elif direccion == self.IZQUIERDA:
-            self.posicion.x = self.posicion.x - 0.002
+            self.posicion.x = self.posicion.x - cantidad_movimiento
         self.transformaciones = glm.mat4(1.0)
         self.transformaciones = glm.translate(self.transformaciones,
                 self.posicion)

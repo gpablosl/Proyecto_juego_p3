@@ -169,19 +169,6 @@ class Fondo(Modelo):
             )
         )
 
-        self.vertices = np.append(self.vertices, np.array(
-                [
-                    0.00,0.075,0,1.0,       0.5,0.18,0.6,1.0,
-                    0.025,0.00,0.0,1.0,     0.5,0.18,0.6,1.0,
-                    0.05,-0.025,0,1.0,      0.5,0.18,0.6,1.0,
-                    -0.0,-0.075,0,1.0,      0.5,0.18,0.6,1.0,
-                    -0.05,-0.025,0,1.0,     0.5,0.18,0.6,1.0,
-                    -0.025,0.0,0,1.0,       0.5,0.18,0.6,1.0,
-                    -0.05,0.025,0,1.0,      0.5,0.18,0.6,1.0,
-
-                ], dtype="float32"
-            )
-        )
 
         #crear una matriz identidad
         self.transformaciones = glm.mat4(1.0)
@@ -215,7 +202,6 @@ class Fondo(Modelo):
         gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 48, 3)
         gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 51, 5)
         gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 56, 4)
-        gl.glDrawArrays(gl.GL_TRIANGLES, 60, 8)
 
 
 

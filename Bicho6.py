@@ -2,7 +2,7 @@ from OpenGL.GL import *
 from Modelo import *
 import glm
 
-class Bicho(Modelo):
+class Bicho6(Modelo):
     vivo = True
 
     def __init__(self,shader, posicion_id, transformaciones_id, color_id):
@@ -10,7 +10,7 @@ class Bicho(Modelo):
         self.extremo_derecho = 0.12
         self.extremo_inferior = 0.03
         self.extremo_superior = 0.12
-        self.posicion = glm.vec3(0.55, 0.55,0.0)
+        self.posicion = glm.vec3(0.35-0.06, 0.0,0.0)
 
 
         self.vertices = np.array(

@@ -6,14 +6,30 @@ from Modelo import *
 from Triangulo import Triangulo
 from Fondo import Fondo
 from Boss import *
+from Bicho import *
+from Bicho2 import *
+from Bicho3 import *
+from Bicho4 import *
+from Bicho5 import *
+from Bicho6 import *
+from PowerUp import *
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
+bicho = None 
+bicho2 = None 
+bicho3 = None
+bicho4 = None
+bicho5 = None
+bicho6 = None
 fondo = None
 modelo = None
 boss = None
 window = None
+powerUp=  None
+
+tiempo_anterior = 0.0
 
 vertex_shader_source = ""
 with open('vertex_shader.glsl') as archivo:
@@ -24,6 +40,9 @@ with open('fragment_shader.glsl') as archivo:
     fragment_shader_source = archivo.readlines()
 
 def actualizar():
+    global tiempo_anterior
+    tiempo_actual = glfw.get_time()
+    tiempo_delta = tiempo_actual - tiempo_anterior
     global window
     estado_arriba = glfw.get_key(window, glfw.KEY_UP)
     estado_abajo = glfw.get_key(window, glfw.KEY_DOWN)
@@ -31,19 +50,41 @@ def actualizar():
     estado_izquierda = glfw.get_key(window, glfw.KEY_LEFT)
 
     if estado_arriba == glfw.PRESS:
-        modelo.mover(modelo.ARRIBA)
+        modelo.mover(modelo.ARRIBA, tiempo_delta)
     if estado_abajo == glfw.PRESS:
-        modelo.mover(modelo.ABAJO)
+        modelo.mover(modelo.ABAJO, tiempo_delta)
     if estado_derecha == glfw.PRESS:
-        modelo.mover(modelo.DERECHA)
+        modelo.mover(modelo.DERECHA, tiempo_delta)
     if estado_izquierda == glfw.PRESS:
-        modelo.mover(modelo.IZQUIERDA)
+        modelo.mover(modelo.IZQUIERDA, tiempo_delta)
 
-    boss.actualizar()
+    boss.actualizar(tiempo_delta)
     if modelo.colisionando(boss):
         glfw.set_window_should_close(window, 1)
         print("Game over: perdiste")
 
+    if bicho.colisionando(modelo):
+            bicho.vivo = False
+    if bicho2.colisionando(modelo):
+            bicho2.vivo = False
+    if bicho3.colisionando(modelo):
+            bicho3.vivo = False
+    if bicho4.colisionando(modelo):
+            bicho4.vivo = False
+    if bicho5.colisionando(modelo):
+            bicho5.vivo = False
+    if bicho6.colisionando(modelo):
+            bicho6.vivo = False
+
+    if ((bicho.vivo == False) & (bicho2.vivo == False) & (bicho3.vivo == False) & (bicho4.vivo == False) & (bicho5.vivo == False) & (bicho6.vivo == False)):
+        glfw.set_window_should_close(window, 1)
+        print("Game over: ganaste")
+       
+    if modelo.colisionando(powerUp):
+        modelo.velocidad = modelo.velocidad = 1.6
+        powerUp.vivo = False
+
+    tiempo_anterior = tiempo_actual
 
 def colisionando():
     colisionando = False
@@ -53,8 +94,17 @@ def dibujar():
     global modelo
     global fondo
     global boss
-    boss.dibujar()
+    global bicho
+    global powerUp
     fondo.dibujar()
+    bicho.dibujar()
+    bicho2.dibujar()
+    bicho3.dibujar()
+    bicho4.dibujar()
+    bicho5.dibujar()
+    bicho6.dibujar()
+    powerUp.dibujar()
+    boss.dibujar()
     modelo.dibujar()
 
 def main():
@@ -62,6 +112,8 @@ def main():
     global fondo
     global window
     global boss
+    global bicho, bicho2, bicho3 ,bicho4 ,bicho5 ,bicho6
+    global powerUp   
     glfw.init()
 
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR,3)
@@ -96,6 +148,14 @@ def main():
 
     boss = Boss(shader, posicion_id, color_id, transformaciones_id)
 
+    bicho = Bicho(shader, posicion_id, color_id, transformaciones_id)
+    bicho2 = Bicho2(shader, posicion_id, color_id, transformaciones_id)
+    bicho3 = Bicho3(shader, posicion_id, color_id, transformaciones_id)
+    bicho4 = Bicho4(shader, posicion_id, color_id, transformaciones_id)
+    bicho5 = Bicho5(shader, posicion_id, color_id, transformaciones_id)
+    bicho6 = Bicho6(shader, posicion_id, color_id, transformaciones_id)
+
+    powerUp = PowerUp(shader, posicion_id, color_id, transformaciones_id)
 
     #draw loop
     while not glfw.window_should_close(window):
@@ -114,6 +174,7 @@ def main():
     fondo.borrar()
     boss.borrar()
     shader.borrar()
+    bicho.borrar()
 
     
 
