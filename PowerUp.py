@@ -15,11 +15,18 @@ class PowerUp(Modelo):
 
         self.vertices = np.array(
             [
-                0.00*12,0.00*12,0,1.0,  0.43, 0.81, 0.95,1.0, 
-                0.01*12,0.00*12,0,1.0,    0.43, 0.81, 0.95,1.0,  
-                0.00*12,0.01*12,0,1.0,    0.43, 0.81, 0.95,1.0,
-                0.01*12,0.01*12,0,1.0,     0.43, 0.81, 0.95,1.0,
+                0.01*12,0.007*12,0,1.0,    0.43, 0.81, 0.95,1.0,  
+                0.005*12,.01*14,0,1.0,  0.43, 0.81, 0.95,1.0, 
+                0.005*12,-.001*20,0,1.0,    0.43, 0.81, 0.95,1.0,
             ], dtype="float32"
+        )
+        self.vertices = np.append(self.vertices, np.array(
+                [
+                0.00*12,0.007*12,0,1.0,    0.43, 0.81, 0.95,1.0,  
+                0.005*12,.01*14,0,1.0,  0.43, 0.81, 0.95,1.0, 
+                0.005*12,-0.001*20,0,1.0,    0.43, 0.81, 0.95,1.0,                    
+                ], dtype="float32"
+            )
         )
 
         super().__init__(shader, posicion_id, transformaciones_id, color_id)
@@ -38,7 +45,8 @@ class PowerUp(Modelo):
                     1, gl.GL_FALSE, glm.value_ptr(self.transformaciones))
 
 
-            gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 0, 4)
+            gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 0, 3)
+            gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 3, 3)
 
             gl.glBindVertexArray(0)
             self.shader.liberar_programa()

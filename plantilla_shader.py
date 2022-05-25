@@ -27,7 +27,7 @@ fondo = None
 modelo = None
 boss = None
 window = None
-powerUp=  None
+powerUp = None
 
 tiempo_anterior = 0.0
 
@@ -60,8 +60,18 @@ def actualizar():
 
     boss.actualizar(tiempo_delta)
     if modelo.colisionando(boss):
-        glfw.set_window_should_close(window, 1)
+        #glfw.set_window_should_close(window, 1)
         print("Game over: perdiste")
+        bicho.vivo = True
+        bicho2.vivo = True
+        bicho3.vivo = True
+        bicho4.vivo = True
+        bicho5.vivo = True
+        bicho6.vivo = True
+        powerUp.vivo = True
+        modelo.posicion = glm.vec3(0.0,-0.8,0.0)
+        modelo.transformaciones = glm.mat4(1.0)
+        modelo.transformaciones = glm.translate(modelo.transformaciones,modelo.posicion)
 
     if bicho.colisionando(modelo):
             bicho.vivo = False
@@ -81,7 +91,7 @@ def actualizar():
         print("Game over: ganaste")
        
     if modelo.colisionando(powerUp):
-        modelo.velocidad = modelo.velocidad = 1.6
+        modelo.velocidad = modelo.velocidad = 1.7
         powerUp.vivo = False
 
     tiempo_anterior = tiempo_actual
